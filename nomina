@@ -1,0 +1,38 @@
+using System;
+
+class Program
+{
+    const decimal SUELDO_MINIMO = 1500000M; 
+    const int HORAS_MES = 160; 
+
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Ingrese el nombre del empleado:");
+        string nombre = Console.ReadLine(); 
+
+        Console.WriteLine("Ingrese las horas trabajadas durante el mes:");
+        int horasSemana = int.Parse(Console.ReadLine()); 
+
+        Console.WriteLine("Ingrese las horas trabajadas los domingos:");
+        int horasDomingo = int.Parse(Console.ReadLine()); 
+
+        decimal tarifaHora = SUELDO_MINIMO / HORAS_MES; 
+        decimal pagoSemana = tarifaHora * horasSemana * 4; 
+        decimal pagoDomingo = tarifaHora * horasDomingo * 2; 
+        decimal totalPago = pagoSemana + pagoDomingo; 
+
+        if (totalPago < SUELDO_MINIMO)
+        {
+            totalPago = SUELDO_MINIMO;
+        }
+
+        Console.WriteLine("\nResumen de Nómina"o;
+        Console.WriteLine("------------------");
+        Console.WriteLine($"Empleado: {nombre}");
+        Console.WriteLine($"Total Horas Trabajadas: {horasSemana + horasDomingo}");
+        Console.WriteLine($"Tarifa por Hora: ${tarifaHora:N2}");
+        Console.WriteLine($"Pago por Semana: ${pagoSemana:N2}");
+        Console.WriteLine($"Pago por Domingo: ${pagoDomingo:N2}");
+        Console.WriteLine($"Total a Pagar: ${totalPago:N2}");
+    }
+}
