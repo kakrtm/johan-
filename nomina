@@ -2,37 +2,60 @@ using System;
 
 class Program
 {
-    const decimal SUELDO_MINIMO = 1500000M; 
-    const int HORAS_MES = 160; 
+    const decimal SUELDO_MINIMO = 1500000M;
+    const int HORAS_MES = 160;
+    const int MAX_HORAS_SEMANA = 160;
+    const int MAX_HORAS_DOMINICALES = 96;
 
     static void Main(string[] args)
     {
         Console.WriteLine("Ingrese el nombre del empleado:");
-        string nombre = Console.ReadLine(); 
+        string nombre = Console.ReadLine();
 
-        Console.WriteLine("Ingrese las horas trabajadas durante el mes:");
-        int horasSemana = int.Parse(Console.ReadLine()); 
+        Console.WriteLine("Ingrese las horas trabajadas de lunes a sabado:");
+        int horasSemana = int.Parse(Console.ReadLine());
 
-        Console.WriteLine("Ingrese las horas trabajadas los domingos:");
-        int horasDomingo = int.Parse(Console.ReadLine()); 
+        if (horasSemana > MAX_HORAS_SEMANA)
+        {
+            Console.WriteLine($"Se excedio del limite de horas semanales permitidas ({MAX_HORAS_SEMANA}).");
+            horasSemana = MAX_HORAS_SEMANA;
+        }
 
-        decimal tarifaHora = SUELDO_MINIMO / HORAS_MES; 
-        decimal pagoSemana = tarifaHora * horasSemana * 4; 
-        decimal pagoDomingo = tarifaHora * horasDomingo * 2; 
-        decimal totalPago = pagoSemana + pagoDomingo; 
+        Console.WriteLine("Trabajo los domingos? (si/no):");
+        string trabajoDomingos = Console.ReadLine().Trim().ToLower();
+
+        int horasDomingo = 0;
+
+        if (trabajoDomingos == "si")
+        {
+            Console.WriteLine("Ingrese las horas trabajadas los domingos:");
+            horasDomingo = int.Parse(Console.ReadLine());
+
+            if (horasDomingo > MAX_HORAS_DOMINICALES)
+            {
+                Console.WriteLine($"Se excedio del limite de horas dominicales permitidas ({MAX_HORAS_DOMINICALES}).");
+                horasDomingo = MAX_HORAS_DOMINICALES;
+            }
+        }
+
+        decimal tarifaHora = SUELDO_MINIMO / HORAS_MES;
+        decimal pagoSemana = tarifaHora * horasSemana;
+        decimal pagoDomingo = tarifaHora * horasDomingo * 2;
+        decimal totalPago = pagoSemana + pagoDomingo;
 
         if (totalPago < SUELDO_MINIMO)
         {
             totalPago = SUELDO_MINIMO;
         }
 
-        Console.WriteLine("\nResumen de Nómina"o;
+        Console.WriteLine("\nResumen de Nomina");
         Console.WriteLine("------------------");
         Console.WriteLine($"Empleado: {nombre}");
         Console.WriteLine($"Total Horas Trabajadas: {horasSemana + horasDomingo}");
         Console.WriteLine($"Tarifa por Hora: ${tarifaHora:N2}");
-        Console.WriteLine($"Pago por Semana: ${pagoSemana:N2}");
-        Console.WriteLine($"Pago por Domingo: ${pagoDomingo:N2}");
+        Console.WriteLine($"Pago por Semana (Lun-Sab): ${pagoSemana:N2}");
+        Console.WriteLine($"Pago por Domingos: ${pagoDomingo:N2}");
         Console.WriteLine($"Total a Pagar: ${totalPago:N2}");
     }
 }
+
